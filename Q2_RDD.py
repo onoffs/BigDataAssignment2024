@@ -64,7 +64,6 @@ ranked_time = reduced_time.sortBy(lambda x: x[1], ascending = False)
 
 # Convert to a DataFrame to show the result
 ranked_time_df = ranked_time.map(lambda row: Row(time=row[0], count=row[1])).toDF()
-ranked_time_df.show()
 
 # Calculate the execution time
 end_timestamp = time.time()
@@ -72,6 +71,8 @@ execution_time = end_timestamp - start_timestamp
 
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
+
+ranked_time_df.show()
 
 # Stop Spark session
 spark.stop()

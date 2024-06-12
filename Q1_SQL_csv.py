@@ -53,15 +53,15 @@ ORDER BY year ASC, crime_total DESC
 # Execute the SQL query and get the result
 top_crimes = spark.sql(query)
 
-# Show the result
-top_crimes.show()
-
 # Calculate the execution time
 end_timestamp = time.time()
 execution_time = end_timestamp - start_timestamp
 
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
+
+# Show the result
+top_crimes.show()
 
 # Stop Spark session
 spark.stop()

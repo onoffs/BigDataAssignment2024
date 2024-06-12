@@ -61,5 +61,8 @@ execution_time = end_timestamp - start_timestamp
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
 
+# Show the result
+top_crimes.show()
+
 # Stop Spark session
 spark.stop()

@@ -42,14 +42,14 @@ result_df = crime_joined_police.groupby('division').agg(count('*').alias('incide
 # Sort by incidents_total in descending order
 result_df = result_df.orderBy(desc('incidents_total'))
 
-# Show the result
-result_df.show()
-
 # Calculate the execution time
 end_timestamp = time.time()
 execution_time = end_timestamp - start_timestamp
 
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
+
+# Show the result
+result_df.show()
 
 spark.stop() 

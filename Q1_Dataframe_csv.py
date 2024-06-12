@@ -35,15 +35,15 @@ ranked_crimes = crime_counts.withColumn("ranking", rank().over(window_spec))
 # Filter top 3 months per year
 top_crimes = ranked_crimes.filter(col("ranking") <= 3).orderBy("year", col("crime_total").desc())
 
-# Show the result
-top_crimes.show()
-
 # Calculate the execution time
 end_timestamp = time.time()
 execution_time = end_timestamp - start_timestamp
 
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
+
+# Show the result
+top_crimes.show()
 
 # Stop Spark session
 spark.stop()

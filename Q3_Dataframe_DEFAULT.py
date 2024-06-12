@@ -38,8 +38,13 @@ income_data = income_data.withColumn(
 crime_with_zip = crime_data_filtered.join(revgeo_data, (crime_data_filtered['LAT'] == revgeo_data['LAT']) 
     & (crime_data_filtered['LON'] == revgeo_data['LON']), 'inner').drop(revgeo_data.LAT).drop(revgeo_data.LON)
 
+# Explain join (crime_data_filtered and revgecoding)
+crime_with_zip.explain()
+
 # Join with income data to get median household income by ZIP code, drop duplicate columns and drop null income
 crime_with_zip_income = crime_with_zip.join(income_data, crime_with_zip['ZIPcode'] == income_data['Zip Code'], 'inner').drop(crime_with_zip.ZIPcode)
+# Explain join (crime_with_zip and income_data)
+crime_with_zip_income.explain()
 crime_with_zip_income = crime_with_zip_income.filter(col('Estimated Median Income').isNotNull())
 
 # Get the top 3 and bottom 3 ZIP codes by median household income
@@ -63,16 +68,16 @@ bottom_3_crime_data = crime_with_zip_income.filter(col('ZIPcode').isin(bottom_3_
 top_3_aggregated = top_3_crime_data.groupBy('Vict Descent').agg(count('*').alias('total victims')).orderBy(col('total victims').desc())
 bottom_3_aggregated = bottom_3_crime_data.groupBy('Vict Descent').agg(count('*').alias('total victims')).orderBy(col('total victims').desc())
 
-# Show results
-top_3_aggregated.show()
-bottom_3_aggregated.show()
-
 # Calculate the execution time
 end_timestamp = time.time()
 execution_time = end_timestamp - start_timestamp
 
 # Print the execution time
 print("Execution Time:", execution_time, "seconds")
+
+# Show results
+top_3_aggregated.show()
+bottom_3_aggregated.show()
 
 # Stop Spark session
 spark.stop()
