@@ -7,7 +7,7 @@ start_timestamp = time.time()
 
 # Create Spark session
 spark = SparkSession.builder \
-    .appName("Q3 - Crime Analysis by Victim Descent in LA 2015 - DEFAULT") \
+    .appName("Q3 - Crime Analysis by Victim Descent in LA 2015 - BROADCAST") \
     .getOrCreate()
 
 # Read data (csv) into spark Dataframes
