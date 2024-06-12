@@ -53,11 +53,6 @@ crime = crime1.union(crime2)
 crime_with_guns = crime.filter(lambda row: row[16].startswith('1') if row[16] else False)
 crime_with_guns = crime_with_guns.filter(lambda row: (row[26] != '0' and row[26] is not None) or (row[27] != '0' and row[27] is not None))
 
-
-# Strip Area column from initial 0
-crime_data_guns = crime_with_guns.map(
-                        lambda row: tuple(row[i].lstrip('0') if i == 4 else row[i] for i in range(len(row))))
-
 # Prepare for repartition join --> construct key, value pairs
 crime_rdd = crime_with_guns.map(lambda x: (x[4], ('crime', x)))  # 4: 'AREA'
 police_rdd = police_stations.map(lambda x: (x[5], ('police', x))) # 5: 'PREC'
